@@ -16,6 +16,15 @@ def telaPrincipal():
 
     lb_inst = ctk.CTkLabel(FirstFrameScreen, text="Selecione as opções:", font=('Arial', 20), text_color="#A5A5A5", fg_color="#2D1E1E").place_configure(relx=0.4, rely=0.25)
 
+#BOTÕES TELA PRINCIPAL
+CResposta = ctk.CTkButton(FirstFrameScreen, text="Cartão Resposta", font=('Poppins', 20, 'bold'), fg_color="#1C89DC", corner_radius=30).place_configure(relx=0.4, rely=0.35, relwidth=0.2, relheight=0.1)
+
+CProva = ctk.CTkButton(FirstFrameScreen, text="Corrigir Prova", font=('Poppins', 20, 'bold'), fg_color="#1C89DC", corner_radius=30).place_configure(relx=0.4, rely=0.475, relwidth=0.2, relheight=0.1)
+
+Alunos = ctk.CTkButton(FirstFrameScreen, text="Alunos", font=('Poppins', 20, 'bold'), fg_color="#1C89DC", corner_radius=30).place_configure(relx=0.4, rely=0.6, relwidth=0.2, relheight=0.1)
+
+GPlanilha = ctk.CTkButton(FirstFrameScreen, text="Gerar Planilha", font=('Poppins', 20, 'bold'), fg_color="#1C89DC", corner_radius=30).place_configure(relx=0.4, rely=0.725, relwidth=0.2, relheight=0.1)
+
 telaPrincipal()
 
 app.mainloop()
