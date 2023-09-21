@@ -131,6 +131,9 @@ def telaAlunos():
     # Botão Salvar
     botao_salvar = ctk.CTkButton(CorFrame, text="Salvar", font=("Arial", 20), fg_color="#1C89DC", command=salvar_dados)
     botao_salvar.place_configure(relx=0.25,rely=0.6, relwidth=0.5, relheight=0.15)
+
+     #Botão Voltar
+    btn_return_CP = ctk.CTkButton(QuartoFrame, text="Voltar", font=('Arial', 20, 'bold'), command=telaPrincipal).place_configure(relx=0.1, rely=0.12)
     
 
 #BOTÕES TELA PRINCIPAL
