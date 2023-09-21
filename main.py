@@ -71,7 +71,15 @@ def telaAlunos():
     QuartoFrame.place_configure(relx=0, rely=0, relwidth=1, relheight=1)
     FirstFrameScreen.place_forget()
 
-       # Instrução
+     # FUNÇÃO PARA SALVAR DADOS
+    def salvar_dados():
+        matricula = entry_matricula.get()
+        nota = entry_nota.get()
+
+
+    #CONTEÚDO DO FRAME:
+
+    # Instrução
     label_titulo = ctk.CTkLabel(QuartoFrame, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC", fg_color="#2D1E1E").place_configure(relx=0.4, rely=0.1)
 
     label_instrucao = ctk.CTkLabel(QuartoFrame, text="Insira a matrícula e a nota do aluno", font=('Arial', 20), text_color="#A5A5A5", fg_color="#2D1E1E").place_configure(relx=0.35, rely=0.18)
@@ -119,6 +127,11 @@ def telaAlunos():
     entry_nota.insert(0, "Nota")
     entry_nota.bind("<FocusIn>", on_entry_click)
     entry_nota.bind("<FocusOut>", on_focusout)
+
+    # Botão Salvar
+    botao_salvar = ctk.CTkButton(CorFrame, text="Salvar", font=("Arial", 20), fg_color="#1C89DC", command=salvar_dados)
+    botao_salvar.place_configure(relx=0.25,rely=0.6, relwidth=0.5, relheight=0.15)
+    
 
 #BOTÕES TELA PRINCIPAL
 CResposta = ctk.CTkButton(FirstFrameScreen, text="Cartão Resposta", font=('Poppins', 20, 'bold'), fg_color="#1C89DC", corner_radius=30, command=telaCartaoResp).place_configure(relx=0.4, rely=0.35, relwidth=0.2, relheight=0.1)
