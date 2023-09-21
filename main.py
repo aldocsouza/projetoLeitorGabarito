@@ -100,6 +100,26 @@ def telaAlunos():
     entry_matricula.bind("<FocusIn>", on_entry_click)
     entry_matricula.bind("<FocusOut>", on_focusout)
 
+    # Campo de Nota
+
+    def on_entry_click(event):
+        if entry_nota.get() == "Nota":
+            entry_nota.delete(0, "end")
+            entry_nota.insert(0, "")
+            entry_nota.config(fg='black')  # Define a cor do texto para preto
+
+    def on_focusout(event):
+        if entry_nota.get() == "":
+            entry_nota.insert(0, "Nota")
+            entry_nota.config(font=("Arial", 20), fg='grey')  # Define a cor do texto para cinza
+            
+    entry_nota = ctk.CTkEntry(CorFrame, font=("Arial", 24))
+    entry_nota.place_configure(relx=0.25,rely=0.4, relwidth=0.5, relheight=0.15)
+
+    entry_nota.insert(0, "Nota")
+    entry_nota.bind("<FocusIn>", on_entry_click)
+    entry_nota.bind("<FocusOut>", on_focusout)
+
 #BOTÕES TELA PRINCIPAL
 CResposta = ctk.CTkButton(FirstFrameScreen, text="Cartão Resposta", font=('Poppins', 20, 'bold'), fg_color="#1C89DC", corner_radius=30, command=telaCartaoResp).place_configure(relx=0.4, rely=0.35, relwidth=0.2, relheight=0.1)
 
