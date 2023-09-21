@@ -2,9 +2,25 @@ import customtkinter as ctk
 from tkinter import *
 
 app = ctk.CTk()
-app.geometry("1000x600")
+# Defina as dimensões da janela principal
+width = 1000
+height = 600
+
+# Obtenha as dimensões da tela
+screen_width = app.winfo_screenwidth()
+screen_height = app.winfo_screenheight()
+
+# Calcule as coordenadas x e y para centralizar a janela
+x = (screen_width - width) // 2
+y = (screen_height - height) // 3
+
+# Configure a geometria da janela principal para centralizá-la
+app.geometry(f"{width}x{height}+{x}+{y}")
+
+# Configure outras propriedades da janela, se necessário
 app.title("Bem-vindo ao Avalia Prof!")
-app.resizable(False, False)
+app.resizable(True, True)
+app._set_appearance_mode('dark')
 
 #CRIAÇÃO DAS TELAS-FRAMES
 FirstFrameScreen = ctk.CTkFrame(app, fg_color="#2D1E1E")
