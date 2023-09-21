@@ -71,6 +71,35 @@ def telaAlunos():
     QuartoFrame.place_configure(relx=0, rely=0, relwidth=1, relheight=1)
     FirstFrameScreen.place_forget()
 
+       # Instrução
+    label_titulo = ctk.CTkLabel(QuartoFrame, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC", fg_color="#2D1E1E").place_configure(relx=0.4, rely=0.1)
+
+    label_instrucao = ctk.CTkLabel(QuartoFrame, text="Insira a matrícula e a nota do aluno", font=('Arial', 20), text_color="#A5A5A5", fg_color="#2D1E1E").place_configure(relx=0.35, rely=0.18)
+
+    #FRAME
+    CorFrame = ctk.CTkFrame(QuartoFrame)
+    CorFrame.place_configure(relx=0.1, rely=0.25, relwidth=0.8, relheight=0.7)
+
+    # Campo de Matrícula
+
+    def on_entry_click(event):
+        if entry_matricula.get() == "Matrícula":
+            entry_matricula.delete(0, "end")
+            entry_matricula.insert(0, "")
+            entry_matricula.config(fg='black')  # Define a cor do texto para preto
+
+    def on_focusout(event):
+        if entry_matricula.get() == "":
+            entry_matricula.insert(0, "Matrícula")
+            entry_matricula.config(font=("Arial", 20), fg='grey')  # Define a cor do texto para cinza
+
+    entry_matricula = ctk.CTkEntry(CorFrame, font=("Arial", 24))
+    entry_matricula.place_configure(relx=0.25,rely=0.2, relwidth=0.5, relheight=0.15)
+
+    entry_matricula.insert(0, "Matrícula")
+    entry_matricula.bind("<FocusIn>", on_entry_click)
+    entry_matricula.bind("<FocusOut>", on_focusout)
+
 #BOTÕES TELA PRINCIPAL
 CResposta = ctk.CTkButton(FirstFrameScreen, text="Cartão Resposta", font=('Poppins', 20, 'bold'), fg_color="#1C89DC", corner_radius=30, command=telaCartaoResp).place_configure(relx=0.4, rely=0.35, relwidth=0.2, relheight=0.1)
 
