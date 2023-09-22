@@ -22,6 +22,8 @@ app.geometry(f"{width}x{height}+{x}+{y}")
 app.title("Bem-vindo ao Avalia Prof!")
 app.resizable(True, True)
 app._set_appearance_mode('dark')
+app.minsize(width=800, height=600)
+
 
 #CRIAÇÃO DAS TELAS-FRAMES
 FirstFrameScreen = ctk.CTkFrame(app)
@@ -37,9 +39,11 @@ def telaPrincipal():
     QuartoFrame.place_forget()
 
     #CONTEÚDO DO FRAME:
-    lb_title = ctk.CTkLabel(FirstFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC").place_configure(relx=0.4, rely=0.1)
+    lb_title = ctk.CTkLabel(FirstFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC")
+    lb_title.place_configure(rely=0.1, relwidth=1)
 
-    lb_inst = ctk.CTkLabel(FirstFrameScreen, text="Selecione as opções:", font=('Arial', 20), text_color="#A5A5A5").place_configure(relx=0.4, rely=0.25)
+    lb_inst = ctk.CTkLabel(FirstFrameScreen, text="Selecione as opções:", font=('Arial', 20), text_color="#A5A5A5")
+    lb_inst.place_configure(rely=0.25, relwidth=1)
 
 #TELA DE CARTÃO RESPOSTA
 def telaCartaoResp():
@@ -55,7 +59,8 @@ def telaCartaoResp():
     #CONTEÚDO DO FRAME:
     CrFrame = ctk.CTkFrame(SecondFrameScreen).place_configure(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
 
-    lb_title_CR = ctk.CTkLabel(SecondFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC").place_configure(relx=0.4, rely=0.1)
+    lb_title_CR = ctk.CTkLabel(SecondFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC")
+    lb_title_CR.place_configure(rely=0.1, relwidth=1)
     
     btn_return_CR = ctk.CTkButton(SecondFrameScreen, text="Voltar", font=('Arial', 20, 'bold'), command=telaPrincipal).place_configure(relx=0.1, rely=0.12)
 
@@ -74,7 +79,8 @@ def telaCorrigir():
     #CONTEÚDO DO FRAME:
     CorFrame = ctk.CTkFrame(TerceiroFrameScreen).place_configure(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
 
-    lb_title_CP = ctk.CTkLabel(TerceiroFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC").place_configure(relx=0.4, rely=0.1)
+    lb_title_CP = ctk.CTkLabel(TerceiroFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC")
+    lb_title_CP.place_configure(rely=0.1, relwidth=1)
 
     lb_subtitle_CP = ctk.CTkLabel(TerceiroFrameScreen, text="Posicione a câmera dentro da marcação", font=('Arial', 20), text_color="#A5A5A5").place_configure(relx=0.32, rely=0.2)
     
@@ -94,7 +100,8 @@ def telaAlunos():
     #CONTEÚDO DO FRAME:
 
     # Instrução
-    label_titulo = ctk.CTkLabel(QuartoFrame, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC").place_configure(relx=0.4, rely=0.1)
+    label_titulo = ctk.CTkLabel(QuartoFrame, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC")
+    label_titulo.place_configure(rely=0.1, relwidth=1)
 
     label_instrucao = ctk.CTkLabel(QuartoFrame, text="Insira a matrícula e a nota do aluno", font=('Arial', 20), text_color="#A5A5A5").place_configure(relx=0.35, rely=0.18)
 
@@ -151,13 +158,17 @@ def telaAlunos():
     
 
 #BOTÕES TELA PRINCIPAL
-CResposta = ctk.CTkButton(FirstFrameScreen, text="Cartão Resposta", font=('Poppins', 20, 'bold'), corner_radius=30, command=telaCartaoResp).place_configure(relx=0.4, rely=0.35, relwidth=0.2, relheight=0.1)
+CResposta = ctk.CTkButton(FirstFrameScreen, text="Cartão Resposta", font=('Poppins', 20, 'bold'), corner_radius=30, command=telaCartaoResp)
+CResposta.place_configure(relx=0.35, rely=0.35, relwidth=0.3, relheight=0.1)
 
-CProva = ctk.CTkButton(FirstFrameScreen, text="Corrigir Prova", font=('Poppins', 20, 'bold'), corner_radius=30, command=telaCorrigir).place_configure(relx=0.4, rely=0.475, relwidth=0.2, relheight=0.1)
+CProva = ctk.CTkButton(FirstFrameScreen, text="Corrigir Prova", font=('Poppins', 20, 'bold'), corner_radius=30, command=telaCorrigir)
+CProva.place_configure(relx=0.35, rely=0.475, relwidth=0.3, relheight=0.1)
 
-Alunos = ctk.CTkButton(FirstFrameScreen, text="Alunos", font=('Poppins', 20, 'bold'), corner_radius=30, command=telaAlunos).place_configure(relx=0.4, rely=0.6, relwidth=0.2, relheight=0.1)
+Alunos = ctk.CTkButton(FirstFrameScreen, text="Alunos", font=('Poppins', 20, 'bold'), corner_radius=30, command=telaAlunos)
+Alunos.place_configure(relx=0.35, rely=0.6, relwidth=0.3, relheight=0.1)
 
-GPlanilha = ctk.CTkButton(FirstFrameScreen, text="Gerar Planilha", font=('Poppins', 20, 'bold'), corner_radius=30).place_configure(relx=0.4, rely=0.725, relwidth=0.2, relheight=0.1)
+GPlanilha = ctk.CTkButton(FirstFrameScreen, text="Gerar Planilha", font=('Poppins', 20, 'bold'), corner_radius=30)
+GPlanilha.place_configure(relx=0.35, rely=0.725, relwidth=0.3, relheight=0.1)
 
 telaPrincipal()
 
