@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from tkinter import *
+from tkinter import filedialog
 
 app = ctk.CTk()
 # Defina as dimensões da janela principal
@@ -45,12 +46,25 @@ def telaCartaoResp():
     SecondFrameScreen.place_configure(relx=0, rely=0, relwidth=1, relheight=1)
     FirstFrameScreen.place_forget()
 
+    def enviar_imagem():
+        file_path = filedialog.askopenfilename()
+        if file_path:
+            # Faça algo com o caminho do arquivo selecionado, como exibir ou processar
+            print(f"Arquivo selecionado: {file_path}")
+
     #CONTEÚDO DO FRAME:
     CrFrame = ctk.CTkFrame(SecondFrameScreen).place_configure(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
 
     lb_title_CR = ctk.CTkLabel(SecondFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC").place_configure(relx=0.4, rely=0.1)
     
     btn_return_CR = ctk.CTkButton(SecondFrameScreen, text="Voltar", font=('Arial', 20, 'bold'), command=telaPrincipal).place_configure(relx=0.1, rely=0.12)
+
+    label_instrucao = ctk.CTkLabel(SecondFrameScreen, text="Envie o gabarito corrigido", font=("Arial", 14), fg_color="transparent")
+    label_instrucao.place_configure(relx=0.41,rely=0.55)
+
+    # Botão "Enviar cartão gabarito" 
+    enviar_imagem_button = ctk.CTkButton(SecondFrameScreen, text="Enviar Imagem", font=("Arial", 16), command=enviar_imagem)
+    enviar_imagem_button.place_configure(relx=0.25,rely=0.7, relwidth=0.5, relheight=0.1)
 
 #TELA DE CORRIGIR PROVA
 def telaCorrigir():
