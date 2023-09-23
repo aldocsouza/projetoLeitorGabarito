@@ -1,6 +1,9 @@
 import customtkinter as ctk
 from tkinter import *
 from tkinter import filedialog
+import cv2
+from PIL import Image, ImageTk
+import imutils
 
 app = ctk.CTk()
 # Defina as dimensões da janela principal
@@ -73,18 +76,49 @@ def telaCartaoResp():
 
 #TELA DE CORRIGIR PROVA
 def telaCorrigir():
-    TerceiroFrameScreen.place_configure(relx=0, rely=0, relwidth=1, relheight=1)
-    FirstFrameScreen.place_forget()
-    
+    global nova_tela
+    app.iconify()
+    nova_tela = ctk.CTkToplevel()
+
+    width = 1000
+    height = 600
+    screen_width = app.winfo_screenwidth()
+    screen_height = app.winfo_screenheight()
+    x = (screen_width - width) // 2
+    y = (screen_height - height) // 2
+
+
+    nova_tela.geometry(f"{width}x{height}+{x}+{y}")
+
     #CONTEÚDO DO FRAME:
-    CorFrame = ctk.CTkFrame(TerceiroFrameScreen).place_configure(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
+    CorFrame = ctk.CTkFrame(nova_tela).place_configure(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
+    lb_title_CP = ctk.CTkLabel(nova_tela, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC").place_configure(relx=0.4, rely=0.1)
+    lb_subtitle_CP = ctk.CTkLabel(nova_tela, text="Posicione a câmera dentro da marcação", font=('Arial', 20), text_color="#A5A5A5").place_configure(relx=0.32, rely=0.2)
+    btn_return_CP = ctk.CTkButton(nova_tela, text="Voltar", font=('Arial', 20, 'bold'), command=telaPrincipal).place_configure(relx=0.1, rely=0.12)
 
-    lb_title_CP = ctk.CTkLabel(TerceiroFrameScreen, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC")
-    lb_title_CP.place_configure(rely=0.1, relwidth=1)
+    webcam_janela = ctk.CTkLabel(nova_tela, text='')
+    webcam_janela.place_configure(relx=0.25, rely=0.27)
 
-    lb_subtitle_CP = ctk.CTkLabel(TerceiroFrameScreen, text="Posicione a câmera dentro da marcação", font=('Arial', 20), text_color="#A5A5A5").place_configure(relx=0.32, rely=0.2)
+    def configurar_webcam():
+        global video
+        video = cv2.VideoCapture(0)
+        iniciar_webcam()
+
+
+    def iniciar_webcam():
+        global image
+        if video is not None:
+            ret, frame = video.read()
+            if ret == True:
+                frame = imutils.resize(frame, width=500)
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = Image.fromarray(frame)
+                image = ImageTk.PhotoImage(image=img)
+                webcam_janela.configure(image=image)
+                webcam_janela.image = image
+                webcam_janela.after(10, iniciar_webcam)
     
-    btn_return_CP = ctk.CTkButton(TerceiroFrameScreen, text="Voltar", font=('Arial', 20, 'bold'), command=telaPrincipal).place_configure(relx=0.1, rely=0.12)
+    configurar_webcam()
 
 #TELA DE ALUNOS
 def telaAlunos():
