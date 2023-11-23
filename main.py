@@ -122,83 +122,142 @@ def telaCorrigir():
     
     configurar_webcam()
 
+# Defina CorFrame no escopo global
+CorFrame = None
+alunos = {}
+
 #TELA DE ALUNOS
 def telaAlunos():
+    global CorFrame, alunos  # Indica que você está usando as variáveis globais CorFrame e alunos
     QuartoFrame.place_configure(relx=0, rely=0, relwidth=1, relheight=1)
     FirstFrameScreen.place_forget()
 
-     # FUNÇÃO PARA SALVAR DADOS
+    
+
     def salvar_dados():
+        # Acesse a variável global alunos diretamente
         matricula = entry_matricula.get()
         nota = entry_nota.get()
+
+        
+        if matricula != "Matrícula" and nota != "Nota":
+            # Adiciona os dados ao dicionário global
+            alunos[matricula] = nota
 
 
     #CONTEÚDO DO FRAME:
 
-    # Instrução
+    
     label_titulo = ctk.CTkLabel(QuartoFrame, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC")
     label_titulo.place_configure(rely=0.1, relwidth=1)
 
     label_instrucao = ctk.CTkLabel(QuartoFrame, text="Insira a matrícula e a nota do aluno", font=('Arial', 20), text_color="#A5A5A5").place_configure(relx=0.35, rely=0.18)
 
-    #FRAME
+    
     CorFrame = ctk.CTkFrame(QuartoFrame)
     CorFrame.place_configure(relx=0.1, rely=0.25, relwidth=0.8, relheight=0.7)
 
-    # Campo de Matrícula
 
-    def on_entry_click(event):
+    def on_entry_click_matricula(event):
         if entry_matricula.get() == "Matrícula":
             entry_matricula.delete(0, "end")
             entry_matricula.insert(0, "")
-            entry_matricula.config(fg='black')  # Define a cor do texto para preto
+            entry_matricula.config(fg='black')  
 
-    def on_focusout(event):
+    def on_focusout_matricula(event):
         if entry_matricula.get() == "":
             entry_matricula.insert(0, "Matrícula")
-            entry_matricula.config(font=("Arial", 20), fg='grey')  # Define a cor do texto para cinza
+            entry_matricula.config(font=("Arial", 20), fg='grey')  
 
     entry_matricula = ctk.CTkEntry(CorFrame, font=("Arial", 24))
-    entry_matricula.place_configure(relx=0.25,rely=0.2, relwidth=0.5, relheight=0.15)
+    entry_matricula.place_configure(relx=0.25, rely=0.2, relwidth=0.5, relheight=0.15)
 
     entry_matricula.insert(0, "Matrícula")
-    entry_matricula.bind("<FocusIn>", on_entry_click)
-    entry_matricula.bind("<FocusOut>", on_focusout)
+    entry_matricula.bind("<FocusIn>", on_entry_click_matricula)
+    entry_matricula.bind("<FocusOut>", on_focusout_matricula)
 
     # Campo de Nota
 
-    def on_entry_click(event):
+    def on_entry_click_nota(event):
         if entry_nota.get() == "Nota":
             entry_nota.delete(0, "end")
             entry_nota.insert(0, "")
-            entry_nota.config(fg='black')  # Define a cor do texto para preto
+            entry_nota.config(fg='black') 
 
-    def on_focusout(event):
+    def on_focusout_nota(event):
         if entry_nota.get() == "":
             entry_nota.insert(0, "Nota")
-            entry_nota.config(font=("Arial", 20), fg='grey')  # Define a cor do texto para cinza
-            
+            entry_nota.config(font=("Arial", 20), fg='grey')  
+
     entry_nota = ctk.CTkEntry(CorFrame, font=("Arial", 24))
-    entry_nota.place_configure(relx=0.25,rely=0.4, relwidth=0.5, relheight=0.15)
+    entry_nota.place_configure(relx=0.25, rely=0.4, relwidth=0.5, relheight=0.15)
 
     entry_nota.insert(0, "Nota")
-    entry_nota.bind("<FocusIn>", on_entry_click)
-    entry_nota.bind("<FocusOut>", on_focusout)
+    entry_nota.bind("<FocusIn>", on_entry_click_nota)
+    entry_nota.bind("<FocusOut>", on_focusout_nota)
 
     # Botão Salvar
     botao_salvar = ctk.CTkButton(CorFrame, text="Salvar", font=("Arial", 20), command=salvar_dados)
-    botao_salvar.place_configure(relx=0.25,rely=0.6, relwidth=0.5, relheight=0.15)
+    botao_salvar.place_configure(relx=0.25, rely=0.6, relwidth=0.5, relheight=0.15)
 
      #Botão Voltar
     btn_return_CP = ctk.CTkButton(QuartoFrame, text="Voltar", font=('Arial', 20, 'bold'), command=telaPrincipal).place_configure(relx=0.1, rely=0.12)
 
+
 #TELA DE PLANILHA
 def telaPlanilha():
+    global CorFrame, alunos  # variável global CorFrame e alunos
     QuintoFrame.place_configure(relx=0, rely=0, relwidth=1, relheight=1)
     FirstFrameScreen.place_forget()
 
-#CONTEÚDO DO FRAME:
-    CrFrame = ctk.CTkFrame(QuintoFrame).place_configure(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
+# Definição do CorFrame no escopo global
+CorFrame = None
+
+# biblioteca csv e filedialog 
+import csv
+from tkinter import filedialog
+
+# Dicionário para armazenar dados dos alunos
+alunos = {}
+
+# biblioteca openpyxl
+import openpyxl
+
+# Função para gerar a planilha
+def gerar_planilha():
+    # Abre uma janela de diálogo para escolher o local de salvamento
+    destino_arquivo = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel files", "*.xlsx")])
+
+    if destino_arquivo:
+        # Cria um novo workbook
+        wb = openpyxl.Workbook()
+
+        # Seleciona a planilha ativa
+        ws = wb.active
+
+        # Escreve o cabeçalho com base nas chaves do dicionário
+        ws.append(['Matrícula', 'Nota'])
+
+        # Escreve os dados na planilha
+        for matricula, nota in alunos.items():
+            # Escreve cada linha na coluna "A" e "B" respectivamente
+            ws.append([matricula, nota])
+
+        # Salva o workbook como um arquivo xlsx
+        wb.save(destino_arquivo)
+
+
+
+
+# Função para tela de planilha
+def telaPlanilha():
+    global CorFrame  # variável global CorFrame
+    QuintoFrame.place_configure(relx=0, rely=0, relwidth=1, relheight=1)
+    FirstFrameScreen.place_forget()
+
+    # Adiciona CorFrame à tela de planilha
+    CorFrame = ctk.CTkFrame(QuintoFrame)
+    CorFrame.place_configure(relx=0.1, rely=0.3, relwidth=0.8, relheight=0.6)
 
     lb_title_GP = ctk.CTkLabel(QuintoFrame, text="Avalia Prof", font=('Arial', 40, 'bold'), text_color="#1C89DC")
     lb_title_GP.place_configure(rely=0.1, relwidth=1)
@@ -207,10 +266,9 @@ def telaPlanilha():
     
     btn_return_GP = ctk.CTkButton(QuintoFrame, text="Voltar", font=('Arial', 20, 'bold'), command=telaPrincipal).place_configure(relx=0.1, rely=0.12)
 
-    # Botão "Enviar cartão gabarito" 
-    gerar_planilha_btn = ctk.CTkButton(QuintoFrame, text="Gerar", font=("Arial", 20))
-    gerar_planilha_btn.place_configure(relx=0.25,rely=0.5, relwidth=0.5, relheight=0.1)
-
+    # Botão "Gerar Planilha" 
+    gerar_planilha_btn = ctk.CTkButton(QuintoFrame, text="Gerar", font=("Arial", 20), command=gerar_planilha)
+    gerar_planilha_btn.place_configure(relx=0.25, rely=0.5, relwidth=0.5, relheight=0.1)
         
 
 #BOTÕES TELA PRINCIPAL
